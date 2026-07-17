@@ -8,6 +8,9 @@ This custom integration provides Home Assistant support for Droprcam hardware ru
 - **Light:** Provides control over the front Status LED ring (Blue, Yellow, Red, White).
 
 ## Installation
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=weegeeday&repository=Droprcam-HACS&category=integration)
+
 Add this repository to your HACS custom repositories list.
 Then install the "Droprcam" integration and restart Home Assistant.
 
