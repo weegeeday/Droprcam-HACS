@@ -2,6 +2,8 @@
 
 This custom integration provides Home Assistant support for [Droprcam](https://github.com/weegeeday/Droprcam). 
 
+I will note that i recomened using [go2rtc](https://github.com/AlexxIT/go2rtc) or [ffmpeg](https://ffmpeg.org/) to reencode the feed, if you want stability. (You can then change the RTSP URL in the camera settings to point to go2rtc or ffmpeg.)
+
 ## Features
 - **Camera:** Provides the `rtsp://<camera_ip>/stream1` video stream via the camera platform.
 - **Switch:** Provides a toggle for Night Vision (flips IR cut filter and turns on IR LEDs).

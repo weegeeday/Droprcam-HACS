@@ -16,20 +16,21 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Droprcam camera from a config entry."""
     ip_address = hass.data[DOMAIN][entry.entry_id]["ip_address"]
+    rtsp_url = hass.data[DOMAIN][entry.entry_id]["rtsp_url"]
     
-    async_add_entities([DroprcamCamera(entry.entry_id, ip_address)])
+    async_add_entities([DroprcamCamera(entry.entry_id, ip_address, rtsp_url)])
 
 class DroprcamCamera(Camera):
     """Representation of a Droprcam Camera."""
 
-    def __init__(self, entry_id: str, ip_address: str) -> None:
+    def __init__(self, entry_id: str, ip_address: str, rtsp_url: str) -> None:
         """Initialize the camera."""
         super().__init__()
         self._ip_address = ip_address
         self._attr_unique_id = f"{entry_id}_camera"
         self._attr_name = "Droprcam"
         # Provide the RTSP stream directly
-        self._stream_source = f"rtsp://{ip_address}/stream1"
+        self._stream_source = rtsp_url
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, entry_id)},
             name=f"Droprcam ({ip_address})",
