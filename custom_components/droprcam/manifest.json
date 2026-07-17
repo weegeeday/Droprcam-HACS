@@ -1,7 +1,9 @@
 {
   "domain": "droprcam",
   "name": "Droprcam",
-  "codeowners": ["@Droprcam"],
+  "codeowners": [
+    "@weegeeday"
+  ],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/Droprcam/Droprcam-HACS",
