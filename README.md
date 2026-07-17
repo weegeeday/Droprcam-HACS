@@ -1,6 +1,6 @@
 # Droprcam Custom Integration
 
-This custom integration provides Home Assistant support for Droprcam hardware running the lightweight HTTP API on port 8080. 
+This custom integration provides Home Assistant support for [Droprcam](https://github.com/weegeeday/Droprcam). 
 
 ## Features
 - **Camera:** Provides the `rtsp://<camera_ip>/stream1` video stream via the camera platform.
