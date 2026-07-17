@@ -5,6 +5,7 @@ from homeassistant.components.camera import Camera
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.device_registry import DeviceInfo
 
 from .const import DOMAIN
 
@@ -29,6 +30,11 @@ class DroprcamCamera(Camera):
         self._attr_name = "Droprcam"
         # Provide the RTSP stream directly
         self._stream_source = f"rtsp://{ip_address}/stream1"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry_id)},
+            name=f"Droprcam ({ip_address})",
+            manufacturer="Droprcam",
+        )
 
     @property
     def supported_features(self) -> int:

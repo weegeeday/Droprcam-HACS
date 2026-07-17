@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.device_registry import DeviceInfo
 
 from .const import DOMAIN, DEFAULT_HTTP_PORT
 
@@ -31,6 +32,11 @@ class DroprcamNightVisionSwitch(SwitchEntity):
         self._attr_unique_id = f"{entry_id}_night_vision"
         self._attr_name = "Droprcam Night Vision"
         self._is_on = False
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry_id)},
+            name=f"Droprcam ({ip_address})",
+            manufacturer="Droprcam",
+        )
 
     @property
     def is_on(self) -> bool:

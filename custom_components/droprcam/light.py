@@ -2,11 +2,12 @@
 import logging
 import aiohttp
 
-from homeassistant.components.light import ColorMode, LightEntity
+from homeassistant.components.light import ColorMode, LightEntity, LightEntityFeature, ATTR_EFFECT
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.device_registry import DeviceInfo
 
 from .const import DOMAIN, DEFAULT_HTTP_PORT
 
@@ -33,6 +34,14 @@ class DroprcamStatusLED(LightEntity):
         self._is_on = False
         self._attr_supported_color_modes = {ColorMode.ONOFF}
         self._attr_color_mode = ColorMode.ONOFF
+        self._attr_supported_features = LightEntityFeature.EFFECT
+        self._attr_effect_list = ["blue", "yellow", "red", "white"]
+        self._attr_effect = "white"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry_id)},
+            name=f"Droprcam ({ip_address})",
+            manufacturer="Droprcam",
+        )
 
     @property
     def is_on(self) -> bool:
@@ -41,12 +50,14 @@ class DroprcamStatusLED(LightEntity):
 
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the light on."""
-        # Defaulting to white for "on"
-        url = f"http://{self._ip_address}:{DEFAULT_HTTP_PORT}/led/white"
+        effect = kwargs.get(ATTR_EFFECT, self._attr_effect)
+        
+        url = f"http://{self._ip_address}:{DEFAULT_HTTP_PORT}/led/{effect}"
         try:
             async with self._session.get(url) as response:
                 if response.status == 200:
                     self._is_on = True
+                    self._attr_effect = effect
                     self.async_write_ha_state()
                 else:
                     _LOGGER.error("Failed to turn on LED, status: %s", response.status)
