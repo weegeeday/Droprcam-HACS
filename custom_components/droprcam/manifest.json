@@ -1,0 +1,13 @@
+{
+  "domain": "droprcam",
+  "name": "Droprcam",
+  "codeowners": ["@Droprcam"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/Droprcam/Droprcam-HACS",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/Droprcam/Droprcam-HACS/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}
