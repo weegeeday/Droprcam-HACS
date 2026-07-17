@@ -6,7 +6,10 @@
         "description": "Enter the IP address of your Droprcam on the local network.",
         "data": {
           "ip_address": "IP Address",
-          "rtsp_url": "Custom RTSP URL (Optional)"
+          "rtsp_url": "Custom RTSP URL"
+        },
+        "data_description": {
+          "rtsp_url": "Leave blank to use the default Droprcam RTSP stream. Only change this if you are using go2rtc or an ffmpeg proxy."
         }
       }
     },
@@ -16,6 +19,19 @@
     },
     "abort": {
       "already_configured": "Device is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Droprcam Settings",
+        "data": {
+          "rtsp_url": "Custom RTSP URL"
+        },
+        "data_description": {
+          "rtsp_url": "Leave blank to use the default Droprcam RTSP stream. Only change this if you are using go2rtc or an ffmpeg proxy."
+        }
+      }
     }
   }
 }

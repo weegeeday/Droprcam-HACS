@@ -15,14 +15,47 @@ _LOGGER = logging.getLogger(__name__)
 DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_IP_ADDRESS): str,
-        vol.Optional(CONF_RTSP_URL): str,
+        vol.Optional(CONF_RTSP_URL, default=""): str,
     }
 )
+
+class DroprcamOptionsFlowHandler(config_entries.OptionsFlow):
+    """Handle options."""
+
+    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
+        """Initialize options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(
+        self, user_input: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """Manage the options."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        current_url = self.config_entry.options.get(
+            CONF_RTSP_URL, self.config_entry.data.get(CONF_RTSP_URL, "")
+        )
+
+        options_schema = vol.Schema(
+            {
+                vol.Optional(CONF_RTSP_URL, default=current_url): str,
+            }
+        )
+        return self.async_show_form(step_id="init", data_schema=options_schema)
 
 class DroprcamConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Droprcam."""
 
     VERSION = 1
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> config_entries.OptionsFlow:
+        """Create the options flow."""
+        return DroprcamOptionsFlowHandler(config_entry)
 
     async def async_step_user(
         self, user_input: Optional[Dict[str, Any]] = None
